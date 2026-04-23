@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>دانشیار | سامانه آموزشی هوشمند</title>
+    <!-- یک فونت یکسان برای کل سایت -->
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fefbf5 0%, #fff8ef 100%);
+            color: #2d4a3b;
+            scroll-behavior: smooth;
+        }
+
+        /* پالت رنگ بسیار روشن و شاد */
+        :root {
+            --bg-soft: #fffdf9;
+            --card-light: #ffffffdd;
+            --sunset: #fad6b3;
+            --honey: #ffe3b5;
+            --mint-light: #bde5d2;
+            --shadow-soft: 0 12px 28px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0, 0, 0, 0.01);
+            --radius-xl: 36px;
+        }
+
+        /* نوار ناوبری با شفافیت روشن */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 5%;
+            background: rgba(255, 252, 245, 0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+            border-bottom: 1px solid #ffe8d9;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* لوگوی حرفه‌ای و خوش‌آیند */
+        .logo {
+            transition: transform 0.2s ease;
+        }
+        .logo:hover {
+            transform: scale(1.02);
+        }
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(125deg, #3f8269, #dc9f6e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.2px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .logo h1::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            right: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #fbc490, #e09d64);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .logo:hover h1::after {
+            width: 100%;
+        }
+        .logo i {
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #639f86, #eda46b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.2rem;
+            align-items: center;
+        }
+        .nav-menu a, .dropbtn {
+            text-decoration: none;
+            font-weight: 520;
+            color: #6c8268;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #dc8f56;
+        }
+
+        /* دراپ‌داون با تاخیر 1 ثانیه ای */
+        .dropdown {
+            position: relative;
+        }
+        .dropbtn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: -20px;
+            background: #ffffff;
+            min-width: 240px;
+            border-radius: 28px;
+            box-shadow: 0 20px 32px rgba(0, 0, 0, 0.06);
+            padding: 0.6rem 0;
+            z-index: 200;
+            border: 1px solid #fee1c4;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+        .dropdown-content.show-menu {
+            display: block;
+            opacity: 1;
+        }
+        .dropdown-content a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.7rem 1.5rem;
+            color: #52826b;
+            transition: 0.15s;
+        }
+        .dropdown-content a i {
+            width: 28px;
+            color: #e2a06b;
+        }
+        .dropdown-content a:hover {
+            background: #fff3e8;
+            padding-right: 1.8rem;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #dac29c;
+            padding: 0.45rem 1.3rem;
+            border-radius: 40px;
+            color: #718f68;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #ffebd2;
+            border: none;
+            padding: 0.45rem 1.4rem;
+            border-radius: 40px;
+            color: #8e6e48;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary:hover, .btn-outline:hover {
+            transform: scale(0.97);
+            background: #ffe0c2;
+        }
+
+        /* هدر اصلی */
+        .hero {
+            background: #fffcf3;
+            padding: 3rem 5% 3.2rem;
+            text-align: center;
+            border-radius: 0 0 64px 64px;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            color: #aa7e58;
+            font-weight: 700;
+        }
+        .highlight {
+            background: linear-gradient(130deg, #ca8f60, #f5bd86);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* بخش پایه‌ها */
+        .grades-section {
+            background: #fffcf7;
+            padding: 2rem 5%;
+            margin-top: 0.5rem;
+        }
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #7e6952;
+            display: inline-block;
+            border-right: 5px solid #f3bc8b;
+            padding-right: 1rem;
+        }
+        .grade-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.3rem;
+            margin-top: 2rem;
+        }
+        .grade-item {
+            background: white;
+            border-radius: 28px;
+            padding: 1.1rem;
+            text-align: center;
+            font-weight: 520;
+            transition: 0.2s;
+            cursor: pointer;
+            border: 1px solid #ffe1c6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.03);
+        }
+        .grade-item:hover {
+            background: #fff7ef;
+            transform: translateY(-3px);
+            border-color: #f7cb9c;
+        }
+
+        /* بخش جدید ابزارهای هوشمند (سوال‌ساز، مایندمپ، پی‌دی‌اف ساز، موازنه) */
+        .smart-tools {
+            background: #fffef9;
+            padding: 2rem 5%;
+            margin-top: 1rem;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .tool-card {
+            background: white;
+            border-radius: 32px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.25s;
+            border: 1px solid #f9e5cf;
+            cursor: pointer;
+        }
+        .tool-card:hover {
+            transform: translateY(-6px);
+            border-color: #ffdbb5;
+            box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.08);
+        }
+        .tool-icon {
+            font-size: 2.8rem;
+            background: #fff4e8;
+            width: 85px;
+            height: 85px;
+            line-height: 85px;
+            border-radius: 60px;
+            margin: 0 auto 1rem;
+            color: #dc9a64;
+        }
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+            color: #7b634a;
+        }
+        .tool-card p {
+            color: #8e7a64;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+        .coming-badge {
+            display: inline-block;
+            background: #f2e5d6;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            color: #b37b48;
+        }
+
+        footer {
+            background: #e4e2d4;
+            margin-top: 3rem;
+            padding: 2rem 5%;
+            border-radius: 36px 36px 0 0;
+            color: #557558;
+        }
+
+        @media (max-width: 760px) {
+            .navbar { flex-direction: column; gap: 14px; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+            .hero h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <h1><i class="fas fa-graduation-cap"></i> دانشیار</h1>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="active">خانه</a></li>
+            <!-- منوی پایه‌ها با تاخیر 1 ثانیه -->
+            <li class="dropdown" id="gradesDropdown">
+                <button class="dropbtn">پایه‌ها <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-content" id="gradesMenu">
+                    <a href="grade7.html"><i class="fas fa-book-open"></i> هفتم</a>
+                    <a href="grade8.html"><i class="fas fa-book-open"></i> هشتم</a>
+                    <a href="grade9.html"><i class="fas fa-book-open"></i> نهم</a>
+                    <a href="grade10.html"><i class="fas fa-flask"></i> دهم</a>
+                    <a href="grade11.html"><i class="fas fa-chart-line"></i> یازدهم</a>
+                    <a href="grade12.html"><i class="fas fa-graduation-cap"></i> دوازدهم</a>
+                </div>
+            </li>
+            <!-- منوی ابزارها (منوی بالا) -->
+            <li class="dropdown" id="toolsNavDropdown">
+                <button class="dropbtn">ابزارها <i class="fas fa-cog"></i></button>
+                <div class="dropdown-content" id="toolsNavMenu">
+                    <a href="javascript:void(0)" onclick="showToast('🔬 دستگاه موازنه به زودی اضافه می‌شود', 'info')"><i class="fas fa-scale-balanced"></i> موازنه شیمی</a>
+                    <a href="javascript:void(0)" onclick="showToast('📝 سوال‌ساز هوشمند به زودی می‌آید', 'info')"><i class="fas fa-pen-fancy"></i> سوال‌ساز</a>
+                    <a href="javascript:void(0)" onclick="showToast('🧠 ساخت Mind Map با AI به زودی', 'info')"><i class="fas fa-brain"></i> مایندمپ</a>
+                    <a href="javascript:void(0)" onclick="showToast('📄 PDF ساز هوشمند در حال توسعه', 'info')"><i class="fas fa-file-pdf"></i> PDF ساز</a>
+                </div>
+            </li>
+            <li><a href="courses.html">دوره‌ها</a></li>
+            <li><a href="asatid.html">اساتید</a></li>
+            <li><a href="contact.html">تماس با ما</a></li>
+        </ul>
+        <div class="auth-buttons" id="auth-buttons"></div>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <h2>با <span class="highlight">دانشیار</span> هوشمندانه یاد بگیر</h2>
+        <p style="margin-top: 1rem; max-width: 650px; margin-left: auto; margin-right: auto; color: #71856b;">پایه‌های هفتم تا دوازدهم | ابزارهای هوشمند: موازنه، سوال‌ساز، مایندمپ و PDF ساز</p>
+        <div style="margin-top: 2rem;">
+            <button class="btn-primary" onclick="document.querySelector('.grades-section').scrollIntoView({behavior:'smooth'})">📘 مشاهده پایه‌ها</button>
+            <button class="btn-outline" onclick="document.querySelector('.smart-tools').scrollIntoView({behavior:'smooth'})" style="margin-right: 1rem;">✨ ابزارهای هوشمند</button>
+        </div>
+    </section>
+
+    <!-- بخش پایه‌ها -->
+    <section class="grades-section">
+        <h2 class="section-title">📖 پایه‌های تحصیلی</h2>
+        <div class="grade-cards">
+            <div class="grade-item" onclick="location.href='grade7.html'">📘 هفتم</div>
+            <div class="grade-item" onclick="location.href='grade8.html'">📗 هشتم</div>
+            <div class="grade-item" onclick="location.href='grade9.html'">📙 نهم</div>
+            <div class="grade-item" onclick="location.href='grade10.html'">📕 دهم</div>
+            <div class="grade-item" onclick="location.href='grade11.html'">📓 یازدهم</div>
+            <div class="grade-item" onclick="location.href='grade12.html'">📔 دوازدهم</div>
+        </div>
+    </section>
+
+    <!-- بخش جدید ابزارهای هوشمند (موازنه، سوال‌ساز، مایندمپ، PDF ساز) -->
+    <section class="smart-tools">
+        <h2 class="section-title">✨ ابزارهای هوشمند دانشیار</h2>
+        <p style="color:#7e6a57; margin-top: 8px;">ابزارهای تعاملی برای یادگیری عمیق‌تر و خلاقانه‌تر – به زودی</p>
+        <div class="tools-grid">
+            <!-- کارت دستگاه موازنه (مناسب شیمی) -->
+            <div class="tool-card" onclick="showToast('🔬 دستگاه موازنه شیمی: به زودی می‌توانید معادلات شیمیایی را متوازن کنید', 'info')">
+                <div class="tool-icon"><i class="fas fa-scale-balanced"></i></div>
+                <h3>⚖️ موازنه هوشمند</h3>
+                <p>موازنه معادلات شیمیایی به صورت تعاملی – کامل برای تمامی واکنش‌ها</p>
+                <span class="coming-badge"><i class="fas fa-hourglass-half"></i> به زودی</span>
+            </div>
+
+            <!-- کارت سوال‌ساز هوشمند -->
+            <div class="tool-card" onclick="showToast('📝 سوال‌ساز حرفه‌ای با هوش مصنوعی – امکان ساخت آزمون و سوالات تشریحی بزودی فعال می‌شود', 'info')">
+                <div class="tool-icon"><i class="fas fa-pen-fancy"></i></div>
+                <h3>سوال‌ساز هوشمند</h3>
+                <p>با کمک AI دانشیار، سوالات امتحانی و تشریحی متنوع بسازید.</p>
+                <span class="coming-badge"><i class="fas fa-hourglass-half"></i> به زودی</span>
+            </div>
+
+            <!-- کارت ساخت Mind Map با AI -->
+            <div class="tool-card" onclick="showToast('🧠 نقشه ذهنی هوشمند (AI Mind Map) – اطلاعات را بصری دسته‌بندی کنید – در حال توسعه', 'info')">
+                <div class="tool-icon"><i class="fas fa-brain"></i></div>
+                <h3>مایندمپ با AI</h3>
+                <p>ساخت نقشه ذهنی خودکار از درس‌ها و مفاهیم پیچیده با کمک هوش مصنوعی</p>
+                <span class="coming-badge"><i class="fas fa-hourglass-half"></i> به زودی</span>
+            </div>
+
+            <!-- کارت PDF ساز حرفه‌ای -->
+            <div class="tool-card" onclick="showToast('📄 تبدیل محتوا به PDF همراه با قابلیت ویرایش – ابزار حرفه‌ای دانشیار به زودی ارائه می‌شود', 'info')">
+                <div class="tool-icon"><i class="fas fa-file-pdf"></i></div>
+                <h3>PDF ساز هوشمند</h3>
+                <p>تبدیل جزوه، سوالات و یادداشت‌ها به فایل PDF با کیفیت بالا</p>
+                <span class="coming-badge"><i class="fas fa-hourglass-half"></i> به زودی</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+        <div>
+            <h3 style="color:#6b8362;">📚 دانشیار</h3>
+            <p style="font-size: 0.9rem;">سامانه آموزشی هوشمند برای نسل جدید</p>
+        </div>
+        <div>
+            <p><i class="fas fa-phone-alt"></i> ۰۲۱-۱۲۳۴۵۶۷۸ &nbsp;|&nbsp; <i class="fas fa-envelope"></i> info@daneshyar.ir</p>
+        </div>
+    </div>
+    <hr style="margin: 1.2rem 0; border-color: #cfcdb6;">
+    <div style="text-align: center;">تمامی حقوق متعلق به دانشیار است © ۱۴۰۴</div>
+</footer>
+
+<script>
+    // =======================================================
+    // 1. توابع مدیریت منوهای کشویی با تاخیر 1 ثانیه (باز ماندن)
+    // =======================================================
+    function attachDelayedDropdown(dropdownId, menuId) {
+        const dropdown = document.getElementById(dropdownId);
+        const menu = document.getElementById(menuId);
+        if (!dropdown || !menu) return;
+        let closeTimeout = null;
+
+        function openMenu() {
+            if (closeTimeout) clearTimeout(closeTimeout);
+            menu.classList.add('show-menu');
+        }
+
+        function scheduleClose() {
+            if (closeTimeout) clearTimeout(closeTimeout);
+            closeTimeout = setTimeout(() => {
+                menu.classList.remove('show-menu');
+            }, 1000); // 1 ثانیه بعد بسته می‌شود
+        }
+
+        dropdown.addEventListener('mouseenter', openMenu);
+        dropdown.addEventListener('mouseleave', scheduleClose);
+        menu.addEventListener('mouseenter', () => {
+            if (closeTimeout) clearTimeout(closeTimeout);
+        });
+        menu.addEventListener('mouseleave', scheduleClose);
+        const links = menu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (closeTimeout) clearTimeout(closeTimeout);
+                scheduleClose();
+            });
+        });
+    }
+
+    attachDelayedDropdown('gradesDropdown', 'gradesMenu');
+    attachDelayedDropdown('toolsNavDropdown', 'toolsNavMenu');
+
+    // =======================================================
+    // 2. توابع عمومی (toast و احراز هویت)
+    // =======================================================
+    function showToast(msg, type = 'info') {
+        const toastDiv = document.createElement('div');
+        let bgColor = '#f7e5cf';
+        if (type === 'success') bgColor = '#cbe6cf';
+        if (type === 'error') bgColor = '#fcd5ce';
+        toastDiv.style.cssText = `position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:${bgColor}; color:#5c4b32; padding:0.8rem 1.8rem; border-radius:60px; font-weight:500; backdrop-filter:blur(8px); box-shadow:0 5px 12px rgba(0,0,0,0.05); z-index:2000; font-size:0.9rem; text-align:center; display:flex; align-items:center; gap:8px; font-family:'Vazir', sans-serif;`;
+        toastDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i> ${msg}`;
+        document.body.appendChild(toastDiv);
+        setTimeout(() => toastDiv.remove(), 2700);
+    }
+
+    // مدیریت پروفایل کاربر
+    function updateAuthUI() {
+        const container = document.getElementById('auth-buttons');
+        const storedUser = localStorage.getItem('daneshyar_current_user');
+        if (storedUser) {
+            try {
+                const user = JSON.parse(storedUser);
+                container.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:12px; background:#fef3e6; padding:0.3rem 0.8rem 0.3rem 1rem; border-radius:50px;">
+                        <i class="fas fa-user-circle" style="font-size:1.2rem; color:#cd8b54;"></i>
+                        <span style="font-weight:500;">${user.name}</span>
+                        <button onclick="logoutUser()" style="background:#fff0e0; border:none; border-radius:40px; padding:0.3rem 1rem; cursor:pointer; color:#a57148;">خروج</button>
+                    </div>
+                `;
+            } catch(e) { console.log(e); }
+        } else {
+            container.innerHTML = `
+                <button class="btn-outline" onclick="location.href='login.html'">ورود</button>
+                <button class="btn-primary" onclick="location.href='login.html'">عضویت</button>
+            `;
+        }
+    }
+
+    window.logoutUser = function() {
+        localStorage.removeItem('daneshyar_current_user');
+        showToast('با موفقیت خارج شدید', 'success');
+        setTimeout(() => location.reload(), 800);
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateAuthUI();
+        // اطمینان از مخفی بودن منوها در ابتدا
+        document.getElementById('gradesMenu')?.classList.remove('show-menu');
+        document.getElementById('toolsNavMenu')?.classList.remove('show-menu');
+    });
+</script>
+</body>
+</html>
